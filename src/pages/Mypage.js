@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "./api/axios";
+import axios from "../api/axios";
 import styled from "styled-components";
 
-const Mypage = () => {
+export const Mypage = () => {
   const [likes, setLikes] = useState();
   const [orders, setOrders] = useState();
   useEffect(() => {
@@ -99,5 +99,3 @@ const NumberBox = styled.div`
   width: 10px;
   margin: auto;
 `;
-
-export default Mypage;
