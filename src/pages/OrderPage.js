@@ -3,6 +3,7 @@ import { Header } from "../components/Header";
 import axios from "../api/axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 export const OrderPage = () => {
   const [exhibit, setExhibit] = useState([]);
@@ -12,15 +13,17 @@ export const OrderPage = () => {
   const [tel, setTel] = useState("");
   const { exhibitId } = useParams();
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const handleClickBtn = () => {
     postOrder();
   };
 
   const postOrder = async () => {
+    const userId = Number(cookies.get("USERID"));
     try {
       const response = await axios.post("/order", {
-        user_id: 1,
+        user_id: userId,
         exhibit_id: exhibitId,
         address,
         name,
