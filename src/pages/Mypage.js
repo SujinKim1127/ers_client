@@ -115,6 +115,7 @@ export const Mypage = () => {
           </BottomBox>
         </>
       )}
+      <a href="http://localhost:8080/modifyUserInfo">회원정보수정</a>
     </Container>
   );
 };
@@ -149,7 +150,9 @@ const ContentBox = styled.div`
   width: 500px;
 `;
 
-const BottomBox = styled.div``;
+const BottomBox = styled.div`
+  margin-bottom: 50px;
+`;
 
 const InsideBox = styled.div`
   display: flex;
