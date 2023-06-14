@@ -119,9 +119,11 @@ export const Mypage = () => {
               )}
             </ContentBox>
           </BottomBox>
+          <a className="modify" href="http://localhost:8080/modifyUserInfo">
+            회원정보수정
+          </a>
         </>
       )}
-      <a href="http://localhost:8080/modifyUserInfo">회원정보수정</a>
     </Container>
   );
 };
@@ -136,10 +138,13 @@ const Container = styled.div`
   .bold {
     font-weight: 700;
   }
+  .modify {
+    margin-top: 100px;
+  }
 `;
 
 const TopBox = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 150px;
 `;
 
 const HeaderBox = styled.div`
@@ -158,7 +163,7 @@ const ContentBox = styled.div`
 `;
 
 const BottomBox = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 150px;
 `;
 
 const InsideBox = styled.div`
