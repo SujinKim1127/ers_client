@@ -71,6 +71,13 @@ export const Mypage = () => {
                             <td>
                               <AmountBox>{el.amount}</AmountBox>
                             </td>
+                            <td>
+                              <NumberBox>
+                                <a href={`/purchase/${el.order_id}`}>
+                                  자세히보기
+                                </a>
+                              </NumberBox>
+                            </td>
                           </tr>
                         );
                       })}

@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { Header } from "../components/Header";
 import axios from "../api/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export const PurchasePage = () => {
   const [order, setOrder] = useState([]);
   const { orderId } = useParams();
+  const navigate = useNavigate();
+
+  const handleClickBtn = () => {
+    cancelOrder().then(() => {
+      navigate("/mypage");
+    });
+  };
 
   const getOrderInfo = async () => {
     try {
@@ -15,6 +22,15 @@ export const PurchasePage = () => {
     } catch (error) {
       console.error(error);
       setOrder([]);
+    }
+  };
+
+  const cancelOrder = async () => {
+    try {
+      await axios.delete(`/order?id=${orderId}`);
+      alert("주문이 취소되었습니다.");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -34,6 +50,7 @@ export const PurchasePage = () => {
         <div>받는 분 성함: {order.name}</div>
         <div>받는 분 주소: {order.address}</div>
         <div>받는 분 전화번호: {order.tel}</div>
+        <button onClick={handleClickBtn}>주문 취소</button>
       </InfoContainer>
     </PurchasePageContainer>
   );
@@ -47,5 +64,15 @@ const InfoContainer = styled.div`
   padding: 0 20px 20px;
   div {
     margin: 3px 0;
+  }
+
+  button {
+    margin-top: 20px;
+    background-color: transparent;
+    border: 1px solid blue;
+    &:hover {
+      cursor: pointer;
+      color: blue;
+    }
   }
 `;
