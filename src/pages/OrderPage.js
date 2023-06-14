@@ -30,7 +30,7 @@ export const OrderPage = () => {
         tel,
         amount,
       });
-      navigate(`/purchase/${response.data.exhibit_id}`);
+      navigate(`/purchase/${response.data.order_id}`);
     } catch (error) {
       console.error(error);
       alert(JSON.stringify(error.response.data.message));
