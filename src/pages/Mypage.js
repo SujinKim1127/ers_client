@@ -14,11 +14,9 @@ export const Mypage = () => {
     try {
       const response = await axios.get(`/mypage`);
       const resdata = response.data;
-      console.log("data", resdata[0].likes);
       setLikes(resdata[0].likes);
       setOrders(resdata[0].orders);
       setError(false);
-      console.log();
     } catch (error) {
       setError(true);
       console.error("error: ", error);
@@ -56,12 +54,16 @@ export const Mypage = () => {
                       </tr>
                       {orders?.map((el, idx) => {
                         return (
-                          <tr>
+                          <tr key={el.order_id}>
                             <td>
-                              <NumberBox>{idx}</NumberBox>
+                              <NumberBox>{idx + 1}</NumberBox>
                             </td>
                             <td>
-                              <TitleBox>{el.title}</TitleBox>
+                              <TitleBox>
+                                <a href={`/exhibit/${el.exhibit_id}`}>
+                                  {el.title}
+                                </a>
+                              </TitleBox>
                             </td>
                             <td>
                               <DateBox>{el.purchase_date.slice(0, 11)}</DateBox>
@@ -97,12 +99,16 @@ export const Mypage = () => {
                       </tr>
                       {likes?.map((el, idx) => {
                         return (
-                          <tr>
+                          <tr key={el.wish_id}>
                             <td>
-                              <NumberBox>{idx}</NumberBox>
+                              <NumberBox>{idx + 1}</NumberBox>
                             </td>
                             <td>
-                              <TitleBox>{el.title}</TitleBox>
+                              <TitleBox>
+                                <a href={`/exhibit/${el.exhibit_id}`}>
+                                  {el.title}
+                                </a>
+                              </TitleBox>
                             </td>
                           </tr>
                         );
@@ -143,6 +149,7 @@ const HeaderBox = styled.div`
   display: flex;
   align-items: center;
   margin-top: 30px;
+  border-bottom: 1px solid gray;
 `;
 const ContentBox = styled.div`
   display: flex;
@@ -163,6 +170,13 @@ const InsideBox = styled.div`
 const TitleBox = styled.div`
   margin: auto;
   width: 300px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const DateBox = styled.div`

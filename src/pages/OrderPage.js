@@ -132,6 +132,7 @@ const Img = styled.img`
   width: 250px;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+  margin-right: 20px;
 `;
 
 const Infos = styled.div`
