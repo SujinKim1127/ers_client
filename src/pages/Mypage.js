@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import styled from "styled-components";
+import { Header } from "../components/Header";
 
 export const Mypage = () => {
   const [likes, setLikes] = useState();
   const [orders, setOrders] = useState();
+  const [error, setError] = useState(false);
   useEffect(() => {
     data();
   }, []);
@@ -15,41 +17,104 @@ export const Mypage = () => {
       console.log("data", resdata[0].likes);
       setLikes(resdata[0].likes);
       setOrders(resdata[0].orders);
+      setError(false);
       console.log();
     } catch (error) {
+      setError(true);
       console.error("error: ", error);
     }
   };
   return (
     <Container>
-      <TopBox>
-        <HeaderBox>구매한 목록</HeaderBox>
-        <ContentBox>
-          {orders?.map((el, idx) => {
-            return (
-              <InsideBox>
-                <NumberBox>{idx}</NumberBox>
-                <TitleBox>{el.title}</TitleBox>
-                <DateBox>{el.purchase_date.slice(0, 11)}</DateBox>
-                <AmountBox>{el.amount}</AmountBox>
-              </InsideBox>
-            );
-          })}
-        </ContentBox>
-      </TopBox>
-      <BottomBox>
-        <HeaderBox>좋아요 누른 전시</HeaderBox>
-        <ContentBox>
-          {likes?.map((el, idx) => {
-            return (
-              <InsideBox>
-                <NumberBox>{idx}</NumberBox>
-                <TitleBox>{el.title}</TitleBox>
-              </InsideBox>
-            );
-          })}
-        </ContentBox>
-      </BottomBox>
+      <Header />
+      {error ? (
+        "로그인이 필요한 서비스입니다"
+      ) : (
+        <>
+          <TopBox>
+            <HeaderBox>예매한 목록</HeaderBox>
+            <ContentBox>
+              {orders?.length === 0 ? (
+                "예매한 목록이 없습니다"
+              ) : (
+                <>
+                  <InsideBox>
+                    <table>
+                      <tr>
+                        <td>
+                          <NumberBox className="bold">예매 번호</NumberBox>
+                        </td>
+                        <td>
+                          <TitleBox className="bold">전시 제목</TitleBox>
+                        </td>
+                        <td>
+                          <DateBox className="bold">예매 날짜</DateBox>
+                        </td>
+                        <td>
+                          <AmountBox className="bold">수량</AmountBox>
+                        </td>
+                      </tr>
+                      {orders?.map((el, idx) => {
+                        return (
+                          <tr>
+                            <td>
+                              <NumberBox>{idx}</NumberBox>
+                            </td>
+                            <td>
+                              <TitleBox>{el.title}</TitleBox>
+                            </td>
+                            <td>
+                              <DateBox>{el.purchase_date.slice(0, 11)}</DateBox>
+                            </td>
+                            <td>
+                              <AmountBox>{el.amount}</AmountBox>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </table>
+                  </InsideBox>
+                </>
+              )}
+            </ContentBox>
+          </TopBox>
+          <BottomBox>
+            <HeaderBox>좋아요 누른 전시</HeaderBox>
+            <ContentBox>
+              {likes?.length === 0 ? (
+                "좋아요 누른 전시가 없습니다"
+              ) : (
+                <>
+                  <InsideBox>
+                    <table>
+                      <tr>
+                        <td>
+                          <NumberBox className="bold">좋아요 번호</NumberBox>
+                        </td>
+                        <td>
+                          <TitleBox className="bold">전시 제목</TitleBox>
+                        </td>
+                      </tr>
+                      {likes?.map((el, idx) => {
+                        return (
+                          <tr>
+                            <td>
+                              <NumberBox>{idx}</NumberBox>
+                            </td>
+                            <td>
+                              <TitleBox>{el.title}</TitleBox>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </table>
+                  </InsideBox>
+                </>
+              )}
+            </ContentBox>
+          </BottomBox>
+        </>
+      )}
     </Container>
   );
 };
@@ -59,13 +124,23 @@ const Container = styled.div`
   margin: auto;
   justify-content: center;
   flex-direction: column;
+  padding: 0 20px;
+
+  .bold {
+    font-weight: 700;
+  }
 `;
 
-const TopBox = styled.div``;
+const TopBox = styled.div`
+  margin-bottom: 20px;
+`;
 
 const HeaderBox = styled.div`
   font-weight: 700;
   font-size: 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
 `;
 const ContentBox = styled.div`
   display: flex;
@@ -83,19 +158,20 @@ const InsideBox = styled.div`
 
 const TitleBox = styled.div`
   margin: auto;
+  width: 300px;
 `;
 
 const DateBox = styled.div`
-  width: 100px;
+  width: 120px;
   margin: auto;
 `;
 
 const AmountBox = styled.div`
-  width: 20px;
+  width: 40px;
   margin: auto;
 `;
 
 const NumberBox = styled.div`
-  width: 10px;
+  width: 80px;
   margin: auto;
 `;
