@@ -58,7 +58,7 @@ export const Mypage = () => {
                         return (
                           <tr>
                             <td>
-                              <NumberBox>{idx}</NumberBox>
+                              <NumberBox>{idx + 1}</NumberBox>
                             </td>
                             <td>
                               <TitleBox>{el.title}</TitleBox>
@@ -99,7 +99,7 @@ export const Mypage = () => {
                         return (
                           <tr>
                             <td>
-                              <NumberBox>{idx}</NumberBox>
+                              <NumberBox>{idx + 1}</NumberBox>
                             </td>
                             <td>
                               <TitleBox>{el.title}</TitleBox>
