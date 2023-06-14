@@ -21,6 +21,18 @@ export const ExhibitPage = () => {
     });
   };
 
+  const handleClickDeleteBtn = async () => {
+    try {
+      const response = await axios
+        .delete(`/exhibit?id=${exhibitId}`)
+        .then(() => {
+          alert("삭제가 완료되었습니다");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getExhibitData = async () => {
     try {
       const response = await axios.get(`/exhibit?id=${exhibitId}`);
@@ -69,6 +81,11 @@ export const ExhibitPage = () => {
           <div>
             <button onClick={handleClickLikeBtn}>♥︎ 좋아요하기</button>
             <button onClick={handleClickPurchaseBtn}>구매하기</button>
+            {cookies.get("USERID") === "0" ? (
+              <button onClick={handleClickDeleteBtn}>삭제하기</button>
+            ) : (
+              ""
+            )}
           </div>
         </Infos>
       </InfoContainer>
