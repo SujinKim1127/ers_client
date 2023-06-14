@@ -113,9 +113,9 @@ export const Mypage = () => {
               )}
             </ContentBox>
           </BottomBox>
+          <a href="http://localhost:8080/modifyUserInfo">회원정보수정</a>
         </>
       )}
-      <a href="http://localhost:8080/modifyUserInfo">회원정보수정</a>
     </Container>
   );
 };
