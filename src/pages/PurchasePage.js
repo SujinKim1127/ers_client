@@ -44,7 +44,7 @@ const PurchasePageContainer = styled.div``;
 const InfoContainer = styled.div`
   margin: 30px;
   border: 1px solid gray;
-  padding: 10px 0;
+  padding: 0 20px 20px;
   div {
     margin: 3px 0;
   }

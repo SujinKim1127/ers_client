@@ -3,14 +3,22 @@ import { Header } from "../components/Header";
 import axios from "../api/axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 export const ExhibitPage = () => {
   const [exhibit, setExhibit] = useState([]);
   const { exhibitId } = useParams();
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
-  const handleClickBtn = () => {
+  const handleClickPurchaseBtn = () => {
     navigate(`/order/${exhibitId}`);
+  };
+
+  const handleClickLikeBtn = () => {
+    postLike().then(() => {
+      getExhibitData();
+    });
   };
 
   const getExhibitData = async () => {
@@ -23,9 +31,25 @@ export const ExhibitPage = () => {
     }
   };
 
+  const postLike = async () => {
+    try {
+      const response = await axios.post("/like", {
+        user_id: Number(cookies.get("USERID")),
+        exhibit_id: exhibitId,
+      });
+      if (response.status === 201) {
+        alert(JSON.stringify(response.data.message));
+      } else if (response.status === 204) {
+        alert("좋아요가 취소되었습니다.");
+      }
+    } catch (error) {
+      alert(JSON.stringify(error.response.data));
+    }
+  };
+
   useEffect(() => {
     getExhibitData();
-  }, []);
+  }, [exhibitId]);
 
   return (
     <ExhibitPageContainer>
@@ -43,7 +67,8 @@ export const ExhibitPage = () => {
           <div>좋아요: {exhibit.likes}</div>
           <div>가격: {exhibit.price}원</div>
           <div>
-            <button onClick={handleClickBtn}>구매하기</button>
+            <button onClick={handleClickLikeBtn}>♥︎ 좋아요하기</button>
+            <button onClick={handleClickPurchaseBtn}>구매하기</button>
           </div>
         </Infos>
       </InfoContainer>
@@ -73,6 +98,7 @@ const Infos = styled.div`
   }
   button {
     margin-top: 20px;
+    margin-right: 10px;
     padding: 10px;
     background-color: lightblue;
     border: none;
