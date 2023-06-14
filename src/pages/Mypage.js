@@ -141,6 +141,7 @@ const HeaderBox = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
+  margin-top: 30px;
 `;
 const ContentBox = styled.div`
   display: flex;
